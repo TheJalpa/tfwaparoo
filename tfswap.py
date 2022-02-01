@@ -1,5 +1,5 @@
 import argparse
-import system
+import os
 
 #Pass the version you want of terraform
 #Make sure it exists in the src directory as terraform and then the version
@@ -12,13 +12,21 @@ version = args.version
 osystem = args.osystem
 
 #this is your terraform source directory:
-tfsource = "/home/somethinghere"
+#tfsource = "/home/somethinghere"
+tfsource = "D:\\terraform"
 
 if osystem == 'windows':
-    os.system('del ' + tfsource + '\\terraform')
-    os.system('copy src\\terraform' + version + ' ' + tfsource + '\\terraform')
+    try:
+        os.system('del ' + tfsource + '\\terraform.exe')
+    except:
+        print('No tf selected, could be version mismatch, continuing copy')
+    os.system('copy src\\terraform' + version + '.exe ' + tfsource + '\\terraform.exe')
 elif osystem == 'linux':
     os.system('rm ' + tfsource + '/terraform && cp src/terraform' + version + ' ' + tfsource + '/terraform')
 else:
     print ('No valid operating system type supported was entered')
     print ('Currently supported is windows and linux')
+
+##Example Usage
+
+#python tfswap.py --version 12.1 --os windows
